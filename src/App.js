@@ -25,6 +25,7 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import InfoIcon from '@material-ui/icons/Info';
 import HomePopup from './HomePopup'
 import TryPopup from './TryPopup'
+import ImageUploadPopup from './ImageUploadPopup'
 import FormatPopup from './FormatPopup'
 import Viewer from './Viewer';
 import catalog from './catalog.json'
@@ -157,6 +158,14 @@ export default function App() {
     setTryPopupOpened(true);
   }
 
+  /** Image upload popup */
+  const [imagePopupOpened, setImagePopupOpened] = React.useState(false);
+
+  const openImagePopup = () => {
+    autoOpenDrawer();
+    setImagePopupOpened(true);
+  }
+
   /** Format popup */
   const [formatPopupOpened, setFormatPopupOpened] = React.useState(false);
   const [openedFormat, setOpenedFormat] = React.useState(null);
@@ -216,6 +225,11 @@ export default function App() {
         setOpen={setTryPopupOpened}
         setFile={setFile}
       />
+      <ImageUploadPopup
+        open={imagePopupOpened}
+        setOpen={setImagePopupOpened}
+        setFile={setFile}
+      />
       <FormatPopup
         open={formatPopupOpened}
         setOpen={setFormatPopupOpened}
@@ -247,7 +261,7 @@ export default function App() {
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Link href="https://github.com/rufus31415" color="inherit" target="_blank">
+            {/* <Link href="https://github.com/rufus31415" color="inherit" target="_blank">
               <Button
                 color="inherit"
                 className={classes.button}
@@ -263,7 +277,7 @@ export default function App() {
               onClick={onClickInfo}
             >
               Info
-            </Button>
+            </Button> */}
           </div>
           <div className={classes.sectionMobile}>
             <Link href="https://github.com/rufus31415" color="inherit" target="_blank">
@@ -313,6 +327,13 @@ export default function App() {
           >
             <ListItemIcon><OpenInBrowserIcon /></ListItemIcon>
             <ListItemText primary="Try my files" />
+          </ListItem>
+          <ListItem button
+            key="browserImage"
+            onClick={openImagePopup}
+          >
+            <ListItemIcon><OpenInBrowserIcon /></ListItemIcon>
+            <ListItemText primary="Upload Image" />
           </ListItem>
         </List>
         <Divider />

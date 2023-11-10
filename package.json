@@ -42,7 +42,12 @@
   },
   "devDependencies": {
     "file-loader": "^6.0.0",
+    "file-saver": "^2.0.5",
     "raw-loader": "^4.0.1",
-    "react-app-rewired": "^2.1.6"
+    "react-app-rewired": "^2.1.6",
+    "react-spring": "^9.7.3",
+    "react-three-fiber": "^6.0.13",
+    "three": "^0.158.0",
+    "three-gltf-exporter": "0.0.1"
   }
 }

@@ -101,7 +101,6 @@ export default function HomePopup(props) {
         <DialogContent>
             <section>
                 You can load your own file to test this viewer.
-                If your file is not loading properly, could you please send it to me at <u>rufus31415@gmail.com</u> ?
                 <h2>From URL</h2>
                 Please enter a URL to your 3D file or to a public OnShape document.
                 <div className={{ alignItems: 'center' }}>
