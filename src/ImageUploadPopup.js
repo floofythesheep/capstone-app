@@ -5,11 +5,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 import { useDropzone } from 'react-dropzone';
 import { makeStyles } from '@material-ui/core/styles';
+import './ImageUpload.css';
 
 import * as THREE from 'three';
 
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter.js';
 import saveAs from 'file-saver';
+import styled from 'styled-components'
 
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
@@ -68,16 +70,27 @@ const rejectStyle = {
 
 export default function HomePopup(props) {
     const classes = useStyles();
-    const { setFile } = props
+    const [file, setFile] = useState(null);
+    const [width, setWidth] = useState(1);
+    const [height, setHeight] = useState(1);
+    const [depth, setDepth] = useState(1);
 
-    const [depth, setDepth] = useState(100);
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (file) {
+            loadFile(file, width, height, depth);
+        }
+    };;
 
     const [url, setUrl] = useState("");
 
 
-    const onDrop = (files) => {
-        if (files.length > 0) loadFile(files[0]);
-    }
+    const onDrop = (acceptedFiles) => {
+        if (acceptedFiles.length > 0) {
+            setFile(acceptedFiles[0]);
+            // Here you can call loadFile or any other function to handle the file
+        }
+    };
 
     const { acceptedFiles,
         getRootProps,
@@ -99,11 +112,9 @@ export default function HomePopup(props) {
         isDragAccept
     ]);
 
-    const loadFile = (file) => {
+    const loadFile = (file, userWidth, userHeight, userDepth) => {
         props.setOpen(false)
-
         const imageUrl = URL.createObjectURL(file);
-
         const textureLoader = new THREE.TextureLoader();
         // const texture = textureLoader.load('C:/Users/edge/Pictures/test_texture.jpg');
         textureLoader.load(
@@ -118,10 +129,7 @@ export default function HomePopup(props) {
                 // const geometry = new THREE.BoxGeometry(1, 1, 1);
                 // const mesh = new THREE.Mesh(geometry, material);
 
-                console.log(texture.image.width)
-                console.log(texture.image.height)
-
-                const geometry = new THREE.BoxGeometry(texture.image.width, 100 , texture.image.height);
+                const geometry = new THREE.BoxGeometry(parseFloat(userWidth), parseFloat(userHeight), parseFloat(userDepth));
 
                 // Define custom UV coordinates for the front face (face 4)
                 // const uvMapping = [1, 0, 1, 1, 0, 1, 0, 0]; // The order is top-right, top-left, bottom-left, bottom-right
@@ -133,8 +141,8 @@ export default function HomePopup(props) {
                     new THREE.MeshBasicMaterial({ color: 0xffffff }), // Left side
                     new THREE.MeshBasicMaterial({ color: 0xffffff }), // Top side
                     new THREE.MeshBasicMaterial({ map: texture }),   // Front side
-                    new THREE.MeshBasicMaterial({ color: 0xffffff }), // Bottom side
-                    new THREE.MeshBasicMaterial({ color: 0xffffff })  // Back side
+                    new THREE.MeshBasicMaterial({ color: 0xffffff}), // Bottom side
+                    new THREE.MeshBasicMaterial({ color: 0xffffff})  // Back side
                 ];
 
                 const cube = new THREE.Mesh(geometry, materials);
@@ -180,25 +188,29 @@ export default function HomePopup(props) {
 
 
     const content = (
-        <DialogContent>
-            <section>
-                Upload an image to create a 3d model
-            </section>
-            <section>
-                <h2>Select image</h2>
-                <div {...getRootProps({ style })}>
-                    <input {...getInputProps()} />
-                    <p>Drag 'n' drop a 3D file here</p>
-                    <Button
-                        type="button"
-                        variant="contained"
-                        onClick={open}>
-                        Browse...
-                    </Button>
+        <DialogContent className="dialogContent">
+          <section className="section">
+            <h2>Create a 3D box</h2>
+          </section>
+          <section className="section"> 
+            <div className="form-container">           
+              <form onSubmit={handleSubmit}>
+                
+                <input type="number" placeholder="Width" onChange={e => setWidth(e.target.value)} /><br />
+                <input type="number" placeholder="Height" onChange={e => setHeight(e.target.value)} /><br />
+                <input type="number" placeholder="Depth" onChange={e => setDepth(e.target.value)} /><br />
+                <input type="file" onChange={e => setFile(e.target.files[0])} />
+             
+                <div className="button-container">
+                  <button type="submit" className='button-12'>Create 3D Object</button>
                 </div>
-            </section>
+              </form>
+            </div>
+          </section>
         </DialogContent>
-    );
+      );
+      
+      
 
     return (
         <Popup
@@ -210,3 +222,4 @@ export default function HomePopup(props) {
         />
     )
 }
+

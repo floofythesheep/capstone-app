@@ -292,7 +292,7 @@ export default function App() {
             <IconButton
               aria-label="Info"
               aria-haspopup="true"
-              onClick={null}
+              // onClick={null}
               color="inherit"
               onClick={onClickInfo}
             >
@@ -333,7 +333,7 @@ export default function App() {
             onClick={openImagePopup}
           >
             <ListItemIcon><OpenInBrowserIcon /></ListItemIcon>
-            <ListItemText primary="Upload Image" />
+            <ListItemText primary="Art Pieces" />
           </ListItem>
         </List>
         <Divider />
