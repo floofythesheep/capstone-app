@@ -137,12 +137,12 @@ export default function HomePopup(props) {
                 // geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvMapping, 2));
 
                 const materials = [
-                    new THREE.MeshBasicMaterial({ color: 0xffffff }), // Right side
-                    new THREE.MeshBasicMaterial({ color: 0xffffff }), // Left side
-                    new THREE.MeshBasicMaterial({ color: 0xffffff }), // Top side
+                    new THREE.MeshBasicMaterial({ map: texture }), // Right side
+                    new THREE.MeshBasicMaterial({ map: texture }), // Left side
+                    new THREE.MeshBasicMaterial({ map: texture }), // Top side
                     new THREE.MeshBasicMaterial({ map: texture }),   // Front side
-                    new THREE.MeshBasicMaterial({ color: 0xffffff}), // Bottom side
-                    new THREE.MeshBasicMaterial({ color: 0xffffff})  // Back side
+                    new THREE.MeshBasicMaterial({ map: texture}), // Bottom side
+                    new THREE.MeshBasicMaterial({ map: texture})  // Back side
                 ];
 
                 const cube = new THREE.Mesh(geometry, materials);
